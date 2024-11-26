@@ -1,6 +1,9 @@
 import { NoteParam } from '../types'
 import React from 'react'
 import SidebarItem from '../sidebar-item/SidebarItem'
+import {
+  PlusIcon,
+} from '@heroicons/react/20/solid'
 
 interface SidebarProps {
   notes: NoteParam[]
@@ -20,7 +23,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   const handleDeleteNote = (id: number) => {
     onDeleteNote(id)
   }
- 
+
   const handleAddNote = () => {
     onAddNote()
   }
@@ -30,7 +33,10 @@ const Sidebar: React.FC<SidebarProps> = ({
   }
 
   return <div className="w-full h-full px-4 flex flex-col gap-4">
-    <div className="w-full py-2 px-4 bg-primary text-white rounded-lg cursor-pointer transition-colors duration-300 hover:bg-secondary" onClick={handleAddNote}>Add new note</div>
+    <div className="w-full py-2 px-4 flex items-center gap-4 bg-primary text-white rounded-lg cursor-pointer transition-colors duration-300 hover:bg-secondary" onClick={handleAddNote}>
+      <PlusIcon className='w-6 h-6'></PlusIcon>
+      <span>Add new note</span>
+    </div>
     <div className="flex flex-col flex-1 gap-3 overflow-y-auto scrollbar">
       {
         notes.map((item: NoteParam) => {

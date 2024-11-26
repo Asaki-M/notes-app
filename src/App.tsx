@@ -60,13 +60,23 @@ function App() {
     handleSaveLocalNotes(newNotesData)
   }
 
+  const onUpdateNote = (newNote: NoteParam) => {
+    const newNotes = [...notes]
+    const existing = notes.findIndex(item => item.id === newNote.id)
+    if(existing !== -1) {
+      newNotes[existing] = newNote
+      setNotes(newNotes)
+      handleSaveLocalNotes(newNotes)
+    }
+  }
+
   return (
     <div className='w-full h-screen overflow-hidden p-5 flex'>
       <div className="w-2/5 h-full">
         <Sidebar activeId={activeNoteId} notes={notes} onAddNote={onAddNote} onChange={onChangeNote} onDeleteNote={onDeleteNote}></Sidebar>
       </div>
       <div className="h-full w-3/5">
-        <EditPanel note={activeNote}></EditPanel>
+        <EditPanel note={activeNote} onUpdateNote={onUpdateNote}></EditPanel>
       </div>
     </div>
   )
