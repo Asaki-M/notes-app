@@ -5,7 +5,7 @@ import Sidebar from './sidebar/Sidebar'
 import EditPanel from './editPanel/EditPanel'
 import './style.css'
 
-const STORAGE_KEY = 'notesapp-notes'
+export const STORAGE_KEY = 'notesapp-notes'
 
 function App() {
   const localStorage = window.localStorage
@@ -70,10 +70,15 @@ function App() {
     }
   }
 
+  const onImportNotes = (importNotes: NoteParam[]) => {
+    setNotes(importNotes)
+    handleSaveLocalNotes(importNotes)
+  }
+
   return (
     <div className='w-full h-screen overflow-hidden p-5 flex'>
       <div className="w-2/5 h-full">
-        <Sidebar activeId={activeNoteId} notes={notes} onAddNote={onAddNote} onChange={onChangeNote} onDeleteNote={onDeleteNote}></Sidebar>
+        <Sidebar activeId={activeNoteId} notes={notes} onAddNote={onAddNote} onChange={onChangeNote} onDeleteNote={onDeleteNote} onImportNotes={onImportNotes}></Sidebar>
       </div>
       <div className="h-full w-3/5">
         <EditPanel note={activeNote} onUpdateNote={onUpdateNote}></EditPanel>
