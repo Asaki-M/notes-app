@@ -39,7 +39,7 @@ function App() {
   const onAddNote = () => {
     const noteId = Math.floor(Math.random() * 1000000)
     const noteData = {
-      title: 'New Note' + noteId,
+      title: 'New Note',
       content: 'Please input note content...',
       date: new Date().toISOString(),
       update: new Date().toISOString(),
@@ -49,9 +49,16 @@ function App() {
     setActiveNoteId(noteId)
     setNotes(newNotesData)
     handleSaveLocalNotes(newNotesData)
+    // if use ui component
+    // toast.success('Added a note.')
+    // alert('Added a note.')
   }
 
   const onDeleteNote = (id: number) => {
+    const confirmed = confirm('Do you really want to delete this note?');
+    if (!confirmed) {
+      return
+    }
     const newNotesData = notes.filter(item => item.id !== id)
     setNotes(newNotesData)
     if (id === activeNoteId) {
@@ -63,7 +70,7 @@ function App() {
   const onUpdateNote = (newNote: NoteParam) => {
     const newNotes = [...notes]
     const existing = notes.findIndex(item => item.id === newNote.id)
-    if(existing !== -1) {
+    if (existing !== -1) {
       newNotes[existing] = newNote
       setNotes(newNotes)
       handleSaveLocalNotes(newNotes)
@@ -73,6 +80,9 @@ function App() {
   const onImportNotes = (importNotes: NoteParam[]) => {
     setNotes(importNotes)
     handleSaveLocalNotes(importNotes)
+    // if use ui component
+    // toast.success('Import success.')
+    // alert('Import success.)
   }
 
   return (

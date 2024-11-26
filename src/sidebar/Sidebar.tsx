@@ -4,7 +4,8 @@ import SidebarItem from '../sidebar-item/SidebarItem'
 import ImportCSV from '../importCSV/ImportCSV'
 import {
   PlusIcon,
-  ArrowTopRightOnSquareIcon
+  ArrowTopRightOnSquareIcon,
+  DocumentTextIcon
 } from '@heroicons/react/20/solid'
 import papa from 'papaparse'
 
@@ -74,6 +75,13 @@ const Sidebar: React.FC<SidebarProps> = ({
         sortedNotes.map((item: NoteParam) => {
           return <SidebarItem {...item} key={item.id} activeId={activeId} onClick={handleChange} onDelete={handleDeleteNote}></SidebarItem>
         })
+      }
+      {
+        sortedNotes.length === 0 &&
+        <div className="flex-1 flex flex-col justify-center items-center gap-4 bg-slate-50 rounded-lg">
+          <DocumentTextIcon className='w-12 h-12 text-gray-400'></DocumentTextIcon>
+          <span className='text-gray-400'>No Notes.</span>
+        </div>
       }
     </div>
   </div>

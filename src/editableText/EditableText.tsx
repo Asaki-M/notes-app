@@ -64,7 +64,7 @@ const Sidebar: React.FC<EditInputProps> = ({
             <textarea autoFocus className={`${contentClassName} scrollbar outline-none border-none bg-gray-50 rounded-lg`} value={data} onChange={handleChange} ></textarea>
         )
         :
-        <div className={contentClassName} onClick={handleCanInput}>{value}</div>
+        <div className={`${contentClassName} hover:bg-gray-50 rounded-md`} onClick={handleCanInput}>{value}</div>
     }
   </div>
 }

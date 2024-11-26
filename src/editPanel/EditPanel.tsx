@@ -45,6 +45,10 @@ const Sidebar: React.FC<EditPanelProps> = ({
         </main>
       </>
     }
+    {
+      !note &&
+      <div className='w-full h-full flex justify-center items-center text-gray-400'>No Contents.</div>
+    }
   </div>
 }
 
