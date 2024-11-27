@@ -1,5 +1,8 @@
 import { NoteParam } from '../types'
 import React, { useMemo } from 'react'
+import papa from 'papaparse'
+import { isMobile } from '../utils/util'
+
 import SidebarItem from '../sidebar-item/SidebarItem'
 import ImportCSV from '../importCSV/ImportCSV'
 import {
@@ -7,7 +10,6 @@ import {
   ArrowTopRightOnSquareIcon,
   DocumentTextIcon
 } from '@heroicons/react/20/solid'
-import papa from 'papaparse'
 
 interface SidebarProps {
   notes: NoteParam[]
@@ -17,6 +19,8 @@ interface SidebarProps {
   onDeleteNote: (id: number) => void
   onImportNotes: (importNotes: NoteParam[]) => void
 }
+
+const isMobileMode: boolean = isMobile()
 
 const Sidebar: React.FC<SidebarProps> = ({
   activeId,
@@ -55,20 +59,36 @@ const Sidebar: React.FC<SidebarProps> = ({
       .sort((a, b) => new Date(b.update).getTime() - new Date(a.update).getTime())
   }, [notes])
 
-  return <div className="w-full h-full px-4 flex flex-col gap-4">
-    <div className="w-full flex justify-between items-center">
-      <div className="w-fit py-2 px-4 flex items-center gap-4 bg-primary text-white rounded-lg cursor-pointer transition-colors duration-300 hover:bg-secondary" onClick={handleAddNote}>
-        <PlusIcon className='w-6 h-6'></PlusIcon>
-        <span>Add new note</span>
-      </div>
+  return <div className="w-full h-full pr-4 flex flex-col gap-4">
+    {
+      !isMobileMode ?
+        <div className="w-full flex justify-between items-center">
+          <div className="w-fit py-2 px-4 flex items-center gap-4 bg-primary text-white rounded-lg cursor-pointer transition-colors duration-300 hover:bg-secondary" onClick={handleAddNote}>
+            <PlusIcon className='w-6 h-6'></PlusIcon>
+            <span>Add new note</span>
+          </div>
 
-      <div className="flex justify-center items-center gap-4">
-        <ImportCSV onImportNotes={onImportNotes}></ImportCSV>
-        <div className='w-8 h-8 rounded-md flex justify-center items-center cursor-pointer hover:bg-slate-100' onClick={handleExportNotes}>
-          <ArrowTopRightOnSquareIcon className='w-3/5 h-3/5'></ArrowTopRightOnSquareIcon>
+          <div className="flex justify-center items-center gap-4">
+            <ImportCSV onImportNotes={onImportNotes}></ImportCSV>
+            <div className='w-8 h-8 rounded-md flex justify-center items-center cursor-pointer hover:bg-slate-100' onClick={handleExportNotes}>
+              <ArrowTopRightOnSquareIcon className='w-3/5 h-3/5'></ArrowTopRightOnSquareIcon>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+        :
+        <div className="w-full">
+          <div className="flex items-center gap-4">
+            <ImportCSV onImportNotes={onImportNotes}></ImportCSV>
+            <div className='w-8 h-8 rounded-md flex justify-center items-center cursor-pointer hover:bg-slate-100' onClick={handleExportNotes}>
+              <ArrowTopRightOnSquareIcon className='w-3/5 h-3/5'></ArrowTopRightOnSquareIcon>
+            </div>
+          </div>
+          <div className="w-fit mt-4 py-2 px-4 flex items-center gap-4 bg-primary text-white rounded-lg cursor-pointer transition-colors duration-300 hover:bg-secondary" onClick={handleAddNote}>
+            <span>Add new note</span>
+          </div>
+        </div>
+    }
+
 
     <div className="flex flex-col flex-1 gap-3 overflow-y-auto scrollbar">
       {

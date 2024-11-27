@@ -33,3 +33,8 @@ export const formatDate = (dateStr: string, format: string = 'DD MMM YYYY HH:mm'
 
   return formattedDate;
 };
+
+export const isMobile = () => {
+  const userAgent = navigator.userAgent;
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+}
